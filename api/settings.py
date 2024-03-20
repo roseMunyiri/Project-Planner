@@ -42,10 +42,11 @@ INSTALLED_APPS = [
     # Third-party
     "rest_framework",
     "django_filters",
-    "djoser"
+    "djoser",
+
     
     # Apps
-    'account',
+    'Account',
     'Task',
     'Project'
     
@@ -111,10 +112,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "account.User"
+AUTH_USER_MODEL = "Account.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'Account.serializers.UserCreateSerializer',
+        'current_user': 'Account.serializers.UserSerializer',
+        'user': 'Account.serializers.UserSerializer'
+    },
+    "SET_PASSWORD_RETYPE" : True,
+    "TOKEN_MODEL": None 
+}
 
 LANGUAGE_CODE = 'en-us'
 

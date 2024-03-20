@@ -13,5 +13,5 @@ class AbstractBaseModel(models.Model):
         abstract= True
 
 class Project(AbstractBaseModel):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='projects')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='projects', null=True)
     assignee = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='assigned_projects', null=True, blank=True)

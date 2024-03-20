@@ -23,7 +23,6 @@ class UserCreateSerializer(UserCreateSerializer):
             'first_name',
             'last_name',
             'email',
-            'phone_number',
             'password',
             'confirm_password',
         ]
@@ -32,4 +31,4 @@ class UserCreateSerializer(UserCreateSerializer):
 class UserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         ref_name = 'users'
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
