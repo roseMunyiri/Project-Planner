@@ -1,7 +1,15 @@
-from django.urls import path
-from .views import ProjectListCreateView, ProjectRetrieveUpdateDestroyView
+from django.urls import path, include
+from rest_framework_nested import routers
+
+from .views import ProjectViewSet, TaskViewSet
+
+project_router = routers.DefaultRouter()
+project_router.register('projects', ProjectViewSet, basename='projects')
+
+tasks_router = routers.NestedSimpleRouter(project_router, 'projects', lookup='project')
+tasks_router.register('tasks', TaskViewSet, basename='tasks')
 
 urlpatterns = [
-    path('projects/', ProjectListCreateView.as_view(), name='project-list-create'),
-    path('projects/<int:pk>/', ProjectRetrieveUpdateDestroyView.as_view(), name='project-retrieve-update-destroy'),
+    path('', include(project_router.urls)),
+    path('', include(tasks_router.urls)),
 ]

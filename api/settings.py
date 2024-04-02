@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     
     # Apps
     'Account',
-    'Task',
     'Project'
     
 ]
