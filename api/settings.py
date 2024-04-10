@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,9 +42,12 @@ INSTALLED_APPS = [
     # Third-party
     "rest_framework",
     "django_filters",
+    "djoser",
+
     
     # Apps
-    'account'
+    'Account',
+    'Project'
     
 ]
 
@@ -107,10 +111,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "account.User"
+AUTH_USER_MODEL = "Account.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'Account.serializers.UserCreateSerializer',
+        'current_user': 'Account.serializers.UserSerializer',
+        'user': 'Account.serializers.UserSerializer'
+    },
+    "SET_PASSWORD_RETYPE" : True,
+    "TOKEN_MODEL": None 
+}
 
 LANGUAGE_CODE = 'en-us'
 
@@ -124,8 +138,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')
+    
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
