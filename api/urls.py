@@ -24,6 +24,8 @@ urlpatterns = [
     path('api/',include('Account.urls')),
     path('api/',include('Project.urls')),
     path("api/", include('djoser.urls')),
+
+    path('', include('social_accounts.urls')),
 ]
 
 if settings.DEBUG:
