@@ -7,7 +7,7 @@ from .serializers import UserSerializer
 
 from .utils import send_code_to_user
 from rest_framework.generics import GenericAPIView
-from .serializers import UserRegisterSerializer, PasswordResetRequestSerializer, PasswordResetTokenGenerator, SetNewPasswordSerializer, LoginSerializer
+from .serializers import UserRegisterSerializer, PasswordResetRequestSerializer, PasswordResetTokenGenerator, SetNewPasswordSerializer, LoginSerializer, EmailVerificationSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
@@ -62,6 +62,8 @@ class UserSignupView(generics.CreateAPIView):
 
 
 class UserVerificationEmail(GenericAPIView):
+    serializer_class = EmailVerificationSerializer
+
     def post(self, request):
         otp_code = request.data.get('otp')
 

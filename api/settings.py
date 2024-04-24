@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
-import environ # load or environment viariables 
+import environ 
 from dotenv import load_dotenv
 
 
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "djoser",
+    'drf_yasg',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'django_extensions',

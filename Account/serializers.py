@@ -180,3 +180,8 @@ class LogoutUserSerializer(serializers.Serializer):
         except TokenError:
             return self.fail('bad_token')
         return super().save(**kwargs)
+
+class EmailVerificationSerializer(serializers.Serializer):
+    otp = serializers.IntegerField(write_only = True)
+    class Meta:
+        fields = ['otp']

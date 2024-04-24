@@ -18,13 +18,30 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Project-Planner API",
+        default_version='v1',
+        description="Project-Planner API Endpoints",
+        terms_of_service="",
+        contact=openapi.Contact(email="info@planner.com"),
+        license=openapi.License(name="License"),
+    ),
+    public=True,
+    permission_classes=(),
+)
+
 
 urlpatterns = [
+    path('', schema_view.with_ui('redoc', cache_timeout=0), name= 'Project-PlannerAPI-Docs'),
+    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name= 'Project-Planner-API-Docs'),
     path('admin/', admin.site.urls),
     path('api/',include('Account.urls')),
     path('api/',include('Project.urls')),
     path("api/", include('djoser.urls')),
-
     path('', include('social_accounts.urls')),
 ]
 
