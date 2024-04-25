@@ -16,9 +16,10 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'name', 'tasks']
+        fields =['id', 'name', 'project_creator', 'description', 'attachments', 'status', 'created_at', 'start_date', 'due_date', 'project_duration', 'tasks']
+        read_only_fields = ['tasks']
 
-    
+
 class ProjectSerializer(serializers.ModelSerializer):
     project_duration = serializers.SerializerMethodField()
     start_date = serializers.DateField(write_only=True)
@@ -26,7 +27,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'name', 'description', 'attachments', 'status', 'created_at', 'start_date', 'due_date', 'project_duration']
+        fields = ['id', 'name', 'project_creator', 'description', 'attachments', 'status', 'created_at', 'start_date', 'due_date', 'project_duration']
+        read_only_fields = ['project_creator']
 
     def get_project_duration(self, obj):
         if obj.start_date and obj.due_date:

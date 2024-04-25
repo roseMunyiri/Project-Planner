@@ -31,35 +31,24 @@ class RegisterUserView(GenericAPIView):
             }, status=status.HTTP_201_CREATED)
         return Response(seriallizer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-'''class UserLoginView(generics.CreateAPIView):
-    serializer_class = UserSerializer
 
-    def post(self, request, *args, **kwargs):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        user = authenticate(request, username=email, password=password)
-        if user is not None:
-            login(request, user)
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        '''
 
 class UserLoginView(GenericAPIView):
     serializer_class = LoginSerializer
+    
     def post(self, request):
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
 class UserLogoutView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    
     def post(self, request, *args, **kwargs):
         logout(request)
         return Response({'message': 'User logged out'}, status=status.HTTP_200_OK)
-
-class UserSignupView(generics.CreateAPIView):
-    serializer_class = UserSerializer
-
+    
 
 class UserVerificationEmail(GenericAPIView):
     serializer_class = EmailVerificationSerializer
@@ -85,16 +74,8 @@ class UserVerificationEmail(GenericAPIView):
                 }, status=status.HTTP_404_NOT_FOUND)
 
 
-class TestAuthTokenView(GenericAPIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        data = {
-            'message': 'generated user-tokens works perfectly fine'
-        }
-        return Response(data, status=status.HTTP_200_OK)
-    
 class PasswordResetRequestView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = PasswordResetRequestSerializer
 
     def post(self, request):
@@ -103,6 +84,7 @@ class PasswordResetRequestView(GenericAPIView):
             return Response({'message': 'A link to reset your password has been sent to your email'})
         
 class PasswordResetConfirm(GenericAPIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, uidb64, token):
         try:
             user_id =smart_str(urlsafe_base64_decode(uidb64))
@@ -114,6 +96,7 @@ class PasswordResetConfirm(GenericAPIView):
             return Response({'message': 'Token is invalid or has expired'}, status=status.HTTP_401_UNAUTHORIZED)
         
 class SetNewPassword(GenericAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = SetNewPasswordSerializer
     def patch(self, request):
         serializer = self.serializer_class(data=request.data)
