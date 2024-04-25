@@ -14,6 +14,8 @@ class Project(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     
+    project_creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_projects', default=1)
+
     class Meta:
         ordering = ['-created_at']
 
@@ -44,8 +46,9 @@ class Task(models.Model):
     due_date = models.DateField()
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    assignee = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='tasks', null=True, blank=True)
     attachments = models.FileField(upload_to='tasks/', default='')
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='task')
+    assignee = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='tasks', null=True, blank=True)
+
     
