@@ -1,8 +1,8 @@
 .env-dev
+db.sqlite3
 __pycache__/
 venv/
 *.pyc
-db.sqlite3
 media/
 *.so
 cython_constraint.txt

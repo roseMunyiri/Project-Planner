@@ -30,9 +30,10 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
     
-    def get_queryset(self,  *args, **kwargs):
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
         project_id = self.kwargs.get('project_pk')
-        queryset = Task.objects.filter(project_id=project_id)
+        queryset = Task.objects.filter(project_id=project_id) | Task.objects.filter(assignee=user)
         return queryset
     
     def create(self, request, *args, **kwargs):
