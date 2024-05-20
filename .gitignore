@@ -1,4 +1,5 @@
 .env-dev
+.env-prod
 __pycache__/
 venv/
 *.pyc
@@ -7,3 +8,4 @@ media/
 *.so
 cython_constraint.txt
 PyYAML-5.4.1-cp310-cp310-linux_x86_64.whl
+
