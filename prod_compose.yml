@@ -1,0 +1,27 @@
+services:
+  web:
+    build:
+      context: .
+    command: ["gunicorn", "api.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "120"]
+    volumes:
+      - ..:/app
+    env_file:
+      - .env-prod
+    ports:
+      - "8000:8000"
+    depends_on:             
+      - postgres_db
+
+  postgres_db:
+    image: postgres:15
+    ports:
+      - "5450:5432"
+    environment:
+      - POSTGRES_DB=prod_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
